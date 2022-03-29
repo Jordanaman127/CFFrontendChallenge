@@ -73,6 +73,8 @@ const Home = () => {
 
 export const getStaticProps = async (_) => {
   const queryClient = new QueryClient();
+  // ! PrefetchInfiniteQuery is not currently working for next js so the data is null at first, and on render the users will show
+  // * https://github.com/tannerlinsley/react-query/discussions/826 problem here
   await queryClient.prefetchInfiniteQuery(["users", 1], () => {
     return getUsers(1);
   });
