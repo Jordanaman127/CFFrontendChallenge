@@ -37,9 +37,12 @@ const Home = () => {
         ) {
           return (
             <Card
-              key={`pageI${pageIndex} userI${i}`}
+              key={`pageI${pageIndex}-userI${i}`}
               name={`${user.name.first} ${user.name.last}`}
               img={user.picture.large}
+              age={user.dob.age}
+              city={user.location.city}
+              email={user.email}
             />
           );
         }
@@ -47,7 +50,7 @@ const Home = () => {
     });
 
     return items;
-  }, [data.pages, search]);
+  }, [data?.pages, search]);
 
   useEffect(() => {
     if (!isLoading && isLoadRefVisible && !search) {
@@ -58,13 +61,13 @@ const Home = () => {
   if (error) return "Could get more users";
 
   return (
-    <div className="page-container">
+    <div className="mt-28">
       <Navbar search={search} setSearch={(e) => setSearch(e.target.value)} />
-      <div className="cards-container">{filteredUserPages}</div>
-      <div ref={loadRef} className="load-indication">
+      <div className="grid grid-cols-3 px-40 gap-6">{filteredUserPages}</div>
+      <div ref={loadRef} className="text-center p-6">
         {isFetchingNextPage && hasNextPage
           ? "Loading More users... "
-          : "No more users, you've reached the end!"}
+          : "No more users!"}
       </div>
       <ReactQueryDevtools position="bottom-left" />
     </div>
